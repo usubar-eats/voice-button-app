@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'providers/snippet_provider.dart';
 import 'providers/tts_provider.dart';
 import 'screens/home_screen.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => TtsProvider()),
       ],
       child: MaterialApp(
-        title: '声ボタン',
+        title: 'ことばボタン',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.light,
           ),
           useMaterial3: true,
-          fontFamily: 'Hiragino Sans',
+          textTheme: GoogleFonts.kosugiMaruTextTheme(),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
               elevation: 4,
