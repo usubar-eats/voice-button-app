@@ -1,5 +1,5 @@
 name: voice_assistant_app
-description: "声ボタン - 文字を打つだけで話してくれるアプリ"
+description: "ことばボタン – 声が出ない時に話す読み上げアプリ"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev

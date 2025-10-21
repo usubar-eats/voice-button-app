@@ -112,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      '声ボタン',
+                      'ことばボタン',
                       style: TextStyle(
                         fontSize: titleFontSize,
                         fontWeight: FontWeight.bold,
@@ -123,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SizedBox(height: screenWidth < 350 ? 1 : 2),
                     Text(
-                      '文字を打つだけで話してくれるアプリ',
+                      '声が出ない時に、ワンタップで伝える',
                       style: TextStyle(
                         fontSize: subtitleFontSize,
                         color: Colors.white,

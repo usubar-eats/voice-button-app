@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="声ボタン"
+        android:label="ことばボタン"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
