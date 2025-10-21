@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ことばボタン - フィーチャーグラフィック</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Kosugi Maru', sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .feature-graphic {
+            width: 1024px;
+            height: 500px;
+            background: linear-gradient(135deg, #4A90E2 0%, #357ABD 50%, #2C5F8D 100%);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        /* 装飾的な円形要素 */
+        .circle-decoration {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+        }
+        
+        .circle-1 {
+            width: 400px;
+            height: 400px;
+            background: white;
+            top: -150px;
+            right: -100px;
+        }
+        
+        .circle-2 {
+            width: 300px;
+            height: 300px;
+            background: white;
+            bottom: -100px;
+            left: -50px;
+        }
+        
+        .circle-3 {
+            width: 200px;
+            height: 200px;
+            background: white;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.05;
+        }
+        
+        /* コンテンツエリア */
+        .content {
+            position: relative;
+            z-index: 2;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 80px;
+        }
+        
+        /* 左側：テキストエリア */
+        .text-area {
+            flex: 1;
+            color: white;
+        }
+        
+        .app-title {
+            font-size: 72px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            letter-spacing: 2px;
+        }
+        
+        .app-subtitle {
+            font-size: 32px;
+            opacity: 0.95;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            line-height: 1.5;
+        }
+        
+        .app-description {
+            font-size: 20px;
+            opacity: 0.9;
+            line-height: 1.6;
+            max-width: 500px;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        }
+        
+        /* 右側：アイコンエリア */
+        .icon-area {
+            width: 280px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .app-icon-container {
+            position: relative;
+        }
+        
+        .app-icon-shadow {
+            position: absolute;
+            width: 240px;
+            height: 240px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 60px;
+            filter: blur(30px);
+            top: 20px;
+            left: 0;
+        }
+        
+        .app-icon {
+            position: relative;
+            width: 240px;
+            height: 240px;
+            background: white;
+            border-radius: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        
+        .icon-placeholder {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #4A90E2 0%, #2C5F8D 100%);
+            border-radius: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 80px;
+            color: white;
+        }
+        
+        /* 実際のアイコン画像用 */
+        .app-icon img {
+            width: 100%;
+            height: 100%;
+            border-radius: 60px;
+            object-fit: cover;
+        }
+        
+        /* ボタン風装飾 */
+        .button-decoration {
+            display: inline-block;
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 30px;
+            font-size: 18px;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        /* 説明テキスト */
+        .instructions {
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            max-width: 1024px;
+        }
+        
+        .instructions h3 {
+            color: #4A90E2;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ol {
+            margin-left: 20px;
+        }
+        
+        .instructions li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+        
+        .note {
+            background: #E8F4FF;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            color: #2C5F8D;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="feature-graphic" id="feature-graphic">
+            <!-- 装飾的な円形 -->
+            <div class="circle-decoration circle-1"></div>
+            <div class="circle-decoration circle-2"></div>
+            <div class="circle-decoration circle-3"></div>
+            
+            <!-- メインコンテンツ -->
+            <div class="content">
+                <!-- 左側：テキスト -->
+                <div class="text-area">
+                    <div class="app-title">ことばボタン</div>
+                    <div class="app-subtitle">声が出ない時に、<br>ワンタップで伝える</div>
+                    <div class="app-description">
+                        風邪や喉の不調で声が出ない時も、<br>
+                        登録した言葉をボタン一つで音声化。
+                    </div>
+                    <div class="button-decoration">📱 ワンタップで読み上げ</div>
+                </div>
+                
+                <!-- 右側：アイコン -->
+                <div class="icon-area">
+                    <div class="app-icon-container">
+                        <div class="app-icon-shadow"></div>
+                        <div class="app-icon">
+                            <!-- アイコン画像がある場合はここに表示 -->
+                            <div class="icon-placeholder">💬</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>📸 フィーチャーグラフィック作成手順</h3>
+            <ol>
+                <li><strong>ブラウザで全画面表示</strong>: F11キー（Mac: Control + Command + F）</li>
+                <li><strong>ズームを100%に設定</strong>: Cmd + 0（Mac）/ Ctrl + 0（Windows）</li>
+                <li><strong>スクリーンショット撮影</strong>:
+                    <ul>
+                        <li>Mac: Cmd + Shift + 4 → スペースキー → グラフィック部分をクリック</li>
+                        <li>Windows: Snipping Tool または Win + Shift + S</li>
+                    </ul>
+                </li>
+                <li><strong>サイズ確認</strong>: 1024 x 500 ピクセルであることを確認</li>
+                <li><strong>保存</strong>: PNG形式で <code>feature_graphic.png</code> として保存</li>
+            </ol>
+            
+            <div class="note">
+                💡 ヒント: 実際のアイコン画像を使いたい場合は、お知らせください！HTMLを更新します。
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
