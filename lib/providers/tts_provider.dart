@@ -168,6 +168,7 @@ class TtsProvider with ChangeNotifier {
     try {
       final voices = await _flutterTts.getVoices as List<dynamic>;
       
+      
       // 日本語のローカル音声のみをフィルタリング
       // ローカル音声は速度変更に強く、オフラインでも動作します
       final japaneseLocalVoices = voices
@@ -186,11 +187,55 @@ class TtsProvider with ChangeNotifier {
               })
           .toList();
 
-      // 最大4つの音声を使用
-      _availableVoices = japaneseLocalVoices.take(4).toList();
+      // 優先順位を設定：音声2をより異なる音声に変更
+      final priorityVoices = <Map<String, String>>[];
+      
+      // 音声1: ja-JP-language (標準音声)
+      final standardVoice = japaneseLocalVoices.firstWhere(
+        (v) => v['name'] == 'ja-JP-language',
+        orElse: () => japaneseLocalVoices.isNotEmpty ? japaneseLocalVoices[0] : {},
+      );
+      if (standardVoice.isNotEmpty) priorityVoices.add(standardVoice);
+      
+      // 音声2: ja-jp-x-jac-local を優先（音声1と異なる声質）
+      final jacVoice = japaneseLocalVoices.firstWhere(
+        (v) => v['name'] == 'ja-jp-x-jac-local',
+        orElse: () => {},
+      );
+      if (jacVoice.isNotEmpty) priorityVoices.add(jacVoice);
+      
+      // 音声3: ja-jp-x-jad-local
+      final jadVoice = japaneseLocalVoices.firstWhere(
+        (v) => v['name'] == 'ja-jp-x-jad-local',
+        orElse: () => {},
+      );
+      if (jadVoice.isNotEmpty) priorityVoices.add(jadVoice);
+      
+      // 音声4: ja-jp-x-htm-local (未使用のローカル音声)
+      final htmVoice = japaneseLocalVoices.firstWhere(
+        (v) => v['name'] == 'ja-jp-x-htm-local',
+        orElse: () => {},
+      );
+      if (htmVoice.isNotEmpty) priorityVoices.add(htmVoice);
+      
+      // 優先リストから使用、不足分は残りの音声から補充
+      _availableVoices = priorityVoices;
+      
+      // 4つ未満の場合は残りの音声を追加
+      if (_availableVoices.length < 4) {
+        final remainingVoices = japaneseLocalVoices
+            .where((v) => !_availableVoices.any((av) => av['name'] == v['name']))
+            .take(4 - _availableVoices.length);
+        _availableVoices.addAll(remainingVoices);
+      }
+      
+      // 最大4つに制限
+      if (_availableVoices.length > 4) {
+        _availableVoices = _availableVoices.take(4).toList();
+      }
 
       if (kDebugMode) {
-        print('Found ${_availableVoices.length} Japanese local voices (limited to 4)');
+        print('Selected ${_availableVoices.length} Japanese local voices:');
         for (var i = 0; i < _availableVoices.length; i++) {
           print('  音声${i + 1}: ${_availableVoices[i]['name']}');
         }
