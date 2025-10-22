@@ -1,13 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 /// アプリ情報画面（Play Store審査対応・最小構成版）
-class AboutScreen extends StatelessWidget {
+class AboutScreen extends StatefulWidget {
   const AboutScreen({super.key});
 
+  @override
+  State<AboutScreen> createState() => _AboutScreenState();
+}
+
+class _AboutScreenState extends State<AboutScreen> {
   /// プライバシーポリシーのURL
   static const String privacyPolicyUrl =
       'https://usubar-eats.github.io/voice-button-app/privacy_policy.html';
+  
+  String _version = '読み込み中...';
+  
+  @override
+  void initState() {
+    super.initState();
+    _loadVersion();
+  }
+  
+  Future<void> _loadVersion() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      _version = 'Version ${packageInfo.version}';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,9 +117,9 @@ class AboutScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   
                   // バージョン
-                  const Text(
-                    'Version 1.0.0',
-                    style: TextStyle(
+                  Text(
+                    _version,
+                    style: const TextStyle(
                       fontSize: 14,
                       color: Colors.white70,
                     ),
