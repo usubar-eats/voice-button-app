@@ -163,23 +163,34 @@ class TtsProvider with ChangeNotifier {
     }
   }
 
-  /// 利用可能な音声を取得（最初の4つの日本語音声）
+  /// 利用可能な音声を取得（ローカル音声のみ、最大4つ）
   Future<void> _loadAvailableVoices() async {
     try {
       final voices = await _flutterTts.getVoices as List<dynamic>;
-      final allJapaneseVoices = voices
-          .where((voice) => voice['locale']?.toString().startsWith('ja') ?? false)
+      
+      // 日本語のローカル音声のみをフィルタリング
+      // ローカル音声は速度変更に強く、オフラインでも動作します
+      final japaneseLocalVoices = voices
+          .where((voice) {
+            final locale = voice['locale']?.toString() ?? '';
+            final name = voice['name']?.toString().toLowerCase() ?? '';
+            // 日本語かつローカル音声（-localを含む）または標準音声（-networkを含まない）
+            return locale.startsWith('ja') && 
+                   (name.contains('local') || 
+                    name == 'ja-jp-language' ||
+                    !name.contains('network'));
+          })
           .map((voice) => {
                 'name': voice['name']?.toString() ?? '',
                 'locale': voice['locale']?.toString() ?? '',
               })
           .toList();
 
-      // 最初の4つの音声のみを使用
-      _availableVoices = allJapaneseVoices.take(4).toList();
+      // 最大4つの音声を使用
+      _availableVoices = japaneseLocalVoices.take(4).toList();
 
       if (kDebugMode) {
-        print('Found ${_availableVoices.length} Japanese voices (limited to 4)');
+        print('Found ${_availableVoices.length} Japanese local voices (limited to 4)');
         for (var i = 0; i < _availableVoices.length; i++) {
           print('  音声${i + 1}: ${_availableVoices[i]['name']}');
         }
