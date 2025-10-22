@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-/// アプリ情報画面
+/// アプリ情報画面（Play Store審査対応・最小構成版）
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
 
   /// プライバシーポリシーのURL
   static const String privacyPolicyUrl =
       'https://usubar-eats.github.io/voice-button-app/privacy_policy.html';
-
-  /// GitHubリポジトリのURL
-  static const String githubUrl =
-      'https://github.com/usubar-eats/voice-button-app';
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +106,7 @@ class AboutScreen extends StatelessWidget {
                   
                   const SizedBox(height: 40),
                   
-                  // 情報カード
+                  // プライバシーポリシー
                   _buildInfoCard(
                     context,
                     icon: Icons.privacy_tip_outlined,
@@ -121,16 +117,7 @@ class AboutScreen extends StatelessWidget {
                   
                   const SizedBox(height: 16),
                   
-                  _buildInfoCard(
-                    context,
-                    icon: Icons.code,
-                    title: 'GitHub',
-                    subtitle: 'ソースコードを見る',
-                    onTap: () => _launchUrl(githubUrl),
-                  ),
-                  
-                  const SizedBox(height: 16),
-                  
+                  // データ削除
                   _buildInfoCard(
                     context,
                     icon: Icons.delete_outline,
@@ -139,31 +126,11 @@ class AboutScreen extends StatelessWidget {
                     onTap: () => _showDataDeletionInfo(context),
                   ),
                   
-                  const SizedBox(height: 16),
-                  
-                  _buildInfoCard(
-                    context,
-                    icon: Icons.info_outline,
-                    title: '開発者情報',
-                    subtitle: 'usubar-eats',
-                    onTap: () => _showDeveloperInfo(context),
-                  ),
-                  
                   const SizedBox(height: 40),
                   
-                  // フッター
+                  // フッター（開発者名のみ）
                   const Text(
                     '© 2025 usubar-eats',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.white70,
-                    ),
-                  ),
-                  
-                  const SizedBox(height: 8),
-                  
-                  const Text(
-                    'Made with ❤️ in Japan',
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.white70,
@@ -273,54 +240,6 @@ class AboutScreen extends StatelessWidget {
           'アプリをアンインストールすると、保存されたすべてのデータ（スニペット、設定等）が完全に削除されます。\n\n'
           '個人情報や使用データは外部に送信されません。',
           style: TextStyle(height: 1.6),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('閉じる'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  /// 開発者情報を表示
-  void _showDeveloperInfo(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
-        title: const Row(
-          children: [
-            Icon(Icons.person_outline, color: Color(0xFF4A90E2)),
-            SizedBox(width: 12),
-            Text('開発者情報'),
-          ],
-        ),
-        content: const Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '開発者: usubar-eats',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 16),
-            Text(
-              'このアプリは、声が出ない状況にある方々のコミュニケーションを支援することを目的として開発されました。',
-              style: TextStyle(height: 1.6),
-            ),
-            SizedBox(height: 16),
-            Text(
-              'ご意見・ご要望は GitHubのIssuesまでお寄せください。',
-              style: TextStyle(height: 1.6),
-            ),
-          ],
         ),
         actions: [
           TextButton(
