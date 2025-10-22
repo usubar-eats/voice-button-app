@@ -4,6 +4,7 @@ import '../providers/snippet_provider.dart';
 import '../providers/tts_provider.dart';
 import '../widgets/snippet_button.dart';
 import 'edit_snippet_screen.dart';
+import 'about_screen.dart';
 
 /// メイン画面
 class HomeScreen extends StatefulWidget {
@@ -138,6 +139,26 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             actions: [
               Container(
+                margin: const EdgeInsets.only(right: 4),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: IconButton(
+                  icon: const Icon(Icons.info_outline, size: 24),
+                  color: Colors.white,
+                  tooltip: 'アプリ情報',
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AboutScreen(),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Container(
                 margin: const EdgeInsets.only(right: 8),
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.2),
@@ -146,6 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: IconButton(
                   icon: const Icon(Icons.edit_note, size: 26),
                   color: Colors.white,
+                  tooltip: 'スニペット編集',
                   onPressed: () {
                     Navigator.push(
                       context,
