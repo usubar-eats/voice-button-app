@@ -176,7 +176,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     );
                   },
-                  tooltip: 'スニペット編集',
                 ),
               ),
             ],
