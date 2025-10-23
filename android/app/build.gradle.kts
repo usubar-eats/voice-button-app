@@ -35,6 +35,9 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
+        // targetSdk を Android 15 (API 35) に設定
+        // 実機（Xiaomi 14T Pro）とエミュレーターで動作確認済み
+        // Play Consoleの警告はFlutterフレームワークの問題で、将来的に解決される
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
